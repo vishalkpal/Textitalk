@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "668851503866",
+    "project_id": "textitalk",
+    "storage_bucket": "textitalk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668851503866:android:58e3c12f7cb5c4d3a4bf43",
+        "android_client_info": {
+          "package_name": "com.example.textitalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668851503866-of1260unpvd3icm53n4ov14fnl6ok2vm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATww7hhIfoomdi5YCNRgQGDhj83IM0eqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668851503866-of1260unpvd3icm53n4ov14fnl6ok2vm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
