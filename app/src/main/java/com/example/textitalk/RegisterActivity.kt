@@ -8,10 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,8 +84,37 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enetr valid details ", Toast.LENGTH_LONG).show()
             }
     }
-
+     // uploading the selected photo to user inside /images/ section
     private fun Uploadselectedphoto(){
+        if(SelectedPhotoUri == null) return             // check if uri not null
+           val filename = UUID.randomUUID().toString()  // a random long string
 
+        val Ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        Ref.putFile(SelectedPhotoUri!!)                        // !! because of mismathc names
+            .addOnSuccessListener {
+                Log.d("Main","sucessfully uploaded image : ${it.metadata?.path}")
+
+                // downloading the image we saved
+                Ref.downloadUrl.addOnSuccessListener {
+                    it.toString()
+                    Log.d("mainimage","downloaded image url : $it")
+                    saveUserToFirebaseDatabase(it.toString())
+                }
+            }
+            .addOnFailureListener{
+                Log.d("main","Failed image uri")
+            }
     }
+    private fun saveUserToFirebaseDatabase(ProfileImageUrl:String){
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val txt: EditText = findViewById(R.id.usename_textview_register)
+        val user = User(uid ,txt.text.toString(),ProfileImageUrl)
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d("main","User saved to firebase")
+            }
+    }
+
 }
+class User(val uid:String,val username:String, val ProfileimageUrl:String)
