@@ -1,5 +1,6 @@
 package com.example.textitalk
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -31,11 +32,16 @@ class LoginActivity: AppCompatActivity() {
             return
         }
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if(!it.isSuccessful) return@addOnCompleteListener
 
                 Log.d("LoginActivity","singin successfull: ${it.result?.user?.uid}")
+                val intent = Intent(this,LatestMessegesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                // Above line clears the stack for smooth running and when we press back button it exit to
+                // homepage of the phone insted of the previous activity
+                startActivity(intent)
             }
             .addOnFailureListener {
                 Log.d("Main","Failed to create:  ")

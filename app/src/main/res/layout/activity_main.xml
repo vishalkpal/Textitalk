@@ -98,14 +98,15 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/savedphoto_imageview_register"
-        app:civ_border_width="4dp"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        app:civ_border_width="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_pic_button_register"
         app:layout_constraintEnd_toEndOf="@+id/profile_pic_button_register"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/profile_pic_button_register"
-        app:layout_constraintTop_toTopOf="@+id/profile_pic_button_register" />
-
+        app:layout_constraintTop_toTopOf="@+id/profile_pic_button_register"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

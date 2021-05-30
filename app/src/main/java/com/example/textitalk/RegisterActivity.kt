@@ -2,6 +2,7 @@ package com.example.textitalk
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -50,10 +51,14 @@ class RegisterActivity : AppCompatActivity() {
         if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null ) {
             Log.d("image", "selcted a image")
 
-            SelectedPhotoUri = data.data                                                          // getting the location of the image
-            val bitmap = MediaStore.Images.Media.getBitmap( contentResolver,SelectedPhotoUri )
-            savedphoto_imageview_register.setImageBitmap(bitmap)    // handling image of user when seleting
-            savedphoto_imageview_register.alpha = 0f
+            SelectedPhotoUri = data!!.data                                                          // getting the location of the image
+//            val imageUri: Uri? = data!!.data
+            val source = ImageDecoder.createSource(this.contentResolver,  SelectedPhotoUri!!)
+            val bitmap = ImageDecoder.decodeBitmap(source)
+            //profile_pic_button_register.background = BitmapDrawable(this.resources, bitmap)
+            savedphoto_imageview_register.setImageBitmap(bitmap)
+
+            profile_pic_button_register.alpha = 0f
 
 //            val bitmapDrawable = BitmapDrawable(bitmap)
 //            profile_pic_button_register.setBackgroundDrawable(bitmapDrawable)
@@ -116,6 +121,13 @@ class RegisterActivity : AppCompatActivity() {
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d("main","User saved to firebase")
+
+                                               // when user get saved in firebase we log him in and show his start page
+                val intent = Intent(this,LatestMessegesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                // Above line clears the stack for smooth running and when we press back button it exit to
+                                                // homepage of the phone insted of the previous activity
+                startActivity(intent)
             }
             .addOnFailureListener{
                 Log.d("main","Failed to save user")
