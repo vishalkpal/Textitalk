@@ -13,26 +13,34 @@ class LoginActivity: AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         login_button_login.setOnClickListener {
-            val email = email_edittext_login.text.toString()
-            val password = password_edittext_login.text.toString()
-
-            Log.d("LoginActivity","email is" +email)
-            Log.d("LoginActivity","Passwoed is $password")
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if(!it.isSuccessful) return@addOnCompleteListener
-
-                    Log.d("LoginActivity","singin successfull: ${it.result?.user?.uid}")
-                }
-                .addOnCanceledListener {
-                    Log.d("Main","Failed to create:  ")
-                    Toast.makeText(this, "Please enetr valid details ", Toast.LENGTH_LONG).show()
-                }
+            performLogin()  // perform login fun
         }
         Back_edittext_login.setOnClickListener {
             finish()
         }
+    }
+    private  fun performLogin(){
+        val email = email_edittext_login.text.toString()
+        val password = password_edittext_login.text.toString()
+
+        Log.d("LoginActivity","email is" +email)
+        Log.d("LoginActivity","Passwoed is $password")
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill out email/pw.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if(!it.isSuccessful) return@addOnCompleteListener
+
+                Log.d("LoginActivity","singin successfull: ${it.result?.user?.uid}")
+            }
+            .addOnFailureListener {
+                Log.d("Main","Failed to create:  ")
+                Toast.makeText(this, "Please enetr valid details ", Toast.LENGTH_LONG).show()
+            }
     }
 
 }

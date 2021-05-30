@@ -50,10 +50,13 @@ class RegisterActivity : AppCompatActivity() {
         if(requestCode == 0 && resultCode == Activity.RESULT_OK && data != null ) {
             Log.d("image", "selcted a image")
 
-            SelectedPhotoUri = data.data                                                 // getting the location of the image
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,SelectedPhotoUri )
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            profile_pic_button_register.setBackgroundDrawable(bitmapDrawable)
+            SelectedPhotoUri = data.data                                                          // getting the location of the image
+            val bitmap = MediaStore.Images.Media.getBitmap( contentResolver,SelectedPhotoUri )
+            savedphoto_imageview_register.setImageBitmap(bitmap)    // handling image of user when seleting
+            savedphoto_imageview_register.alpha = 0f
+
+//            val bitmapDrawable = BitmapDrawable(bitmap)
+//            profile_pic_button_register.setBackgroundDrawable(bitmapDrawable)
 
         }
     }
@@ -81,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Log.d("Main","Failed to create: ${it.message}")
-                Toast.makeText(this, "Please enetr valid details ", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please enter valid details ", Toast.LENGTH_LONG).show()
             }
     }
      // uploading the selected photo to user inside /images/ section
@@ -114,7 +117,14 @@ class RegisterActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 Log.d("main","User saved to firebase")
             }
+            .addOnFailureListener{
+                Log.d("main","Failed to save user")
+                Toast.makeText(this, "Failed to save user ", Toast.LENGTH_LONG).show()
+            }
+
     }
 
 }
+
+// user realtime database class nodes
 class User(val uid:String,val username:String, val ProfileimageUrl:String)
