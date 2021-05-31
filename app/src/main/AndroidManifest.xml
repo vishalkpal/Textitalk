@@ -9,10 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".newmessegeActivity"></activity>
-        <activity android:name=".LatestMessegesActivity">
 
-            <!-- intent-filter helps to lauch the main screen as the this activity instead of the register screen -->
+        <activity android:name=".LatestMessegesActivity">
+            <!-- intent-filter helps to launch the main screen as the this activity instead of the register screen -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,8 +24,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-             <meta-data android:name="android.support.PARENT-ACTIVITY"
-                 android:value=".LatestMessegesActivity"></meta-data>
+        <activity android:name=".newmessegeActivity"
+            android:launchMode="singleTask">
+
+            <meta-data android:name="android.support.PARENT-ACTIVITY"
+                android:value=".LatestMessegesActivity"/>
+        </activity>
+
     </application>
 
 </manifest>
