@@ -139,4 +139,6 @@ class RegisterActivity : AppCompatActivity() {
 }
 
 // user realtime database class nodes
-class User(val uid:String,val username:String, val ProfileimageUrl:String)
+class User(val uid:String,val username:String, val ProfileimageUrl:String){
+    constructor() : this("","","")
+}
