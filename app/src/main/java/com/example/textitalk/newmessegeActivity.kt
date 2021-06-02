@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -59,6 +60,10 @@ class UserItem(val user: User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         // will be called in our list
         viewHolder.itemView.username_textview_newmessege.text = user.username
+
+        if (!user.ProfileimageUrl.isEmpty()) {
+            Picasso.get().load(user.ProfileimageUrl).into(viewHolder.itemView.userprofile_newmessege)
+        }
     }
 
     override fun getLayout(): Int {
